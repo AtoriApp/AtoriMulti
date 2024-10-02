@@ -12,6 +12,13 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
+import org.jxmpp.jid.Jid
+import org.jxmpp.jid.impl.JidCreate
+
+object XmppUtils {
+    val String.jid
+        get() = JidCreate.from(this)
+}
 
 object ComposeUtils {
     fun Color.opacify(opacity: Float): Color {

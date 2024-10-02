@@ -1,0 +1,4 @@
+<resources>
+    <color name="md_theme_dynamic_primary">@android:color/system_accent1_200</color>
+    <color name="md_theme_dynamic_onPrimary">@android:color/system_accent1_800</color>
+</resources>

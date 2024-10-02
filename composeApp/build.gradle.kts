@@ -1,6 +1,15 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.text.SimpleDateFormat
+import java.util.*
+
+// 版本代码是yyyyMMdd动态生成
+val verCode = SimpleDateFormat("yyyyMMdd").format(Date()).toInt()
+// 当实现计划时记得撞♂版本号
+val verName = "0.0.1"
+// 包名
+val appId = "test.multi"
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -24,68 +33,93 @@ kotlin {
 
         androidMain.dependencies {
             implementation(compose.preview)
+
             implementation(libs.androidx.activity.compose)
-            implementation(libs.androidx.appcompat)
-            implementation(libs.androidx.core.ktx)
+            // implementation(libs.androidx.appcompat)
+            // implementation(libs.androidx.core.ktx)
+
+            implementation(libs.smack.art)
+            implementation(libs.accompanist.systemuicontroller)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.material3)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+            implementation(libs.compose.navigation)
+            implementation(libs.smack.tcp)
+            implementation(libs.smack.im)
+            implementation(libs.smack.extensions)
+            implementation(libs.smack.experimental)
+            implementation(libs.smack.omemo)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
+
+            implementation(libs.smack.jvm)
         }
     }
 }
 
 android {
-    namespace = "test.multi"
+    namespace = appId
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        applicationId = "test.multi"
+        applicationId = appId
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = verCode
+        versionName = verName
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     buildFeatures {
         compose = true
     }
+
     dependencies {
         debugImplementation(compose.uiTooling)
+    }
+
+    // Smack的xpp3冲突解决
+    configurations {
+        all {
+            exclude(group = "xpp3", module = "xpp3")
+            exclude(group = "xpp3", module = "xpp3_min")
+        }
     }
 }
 
 compose.desktop {
     application {
-        mainClass = "test.multi.MainKt"
+        mainClass = "$appId.MainKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "test.multi"
-            packageVersion = "1.0.0"
+            targetFormats(TargetFormat.Exe)
+            packageName = appId
+            packageVersion = verName
         }
     }
 }
