@@ -19,11 +19,17 @@ kotlinxSerializationProtobuf = "1.7.3"
 navigationCompose = "2.7.0-alpha07"
 androidx-lifecycle = "2.8.0"
 compose-plugin = "1.6.11"
-
 smackVersion = "4.5.0-beta3"
+
+ksp = "2.0.20-1.0.25"
+
+room = "2.7.0-alpha09"
 
 [libraries]
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -46,6 +52,7 @@ smack-extensions = { module = "org.igniterealtime.smack:smack-extensions", versi
 smack-experimental = { module = "org.igniterealtime.smack:smack-experimental", version.ref = "smackVersion" }
 smack-im = { module = "org.igniterealtime.smack:smack-im", version.ref = "smackVersion" }
 smack-omemo = { module = "org.igniterealtime.smack:smack-omemo", version.ref = "smackVersion" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -53,3 +60,5 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "room" }

@@ -9,13 +9,19 @@ val verCode = SimpleDateFormat("yyyyMMdd").format(Date()).toInt()
 // 当实现计划时记得撞♂版本号
 val verName = "0.0.1"
 // 包名
-val appId = "test.multi"
+val appId = "app.atori.multi"
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 kotlin {
@@ -35,17 +41,26 @@ kotlin {
             implementation(compose.preview)
 
             implementation(libs.androidx.activity.compose)
-            // implementation(libs.androidx.appcompat)
-            // implementation(libs.androidx.core.ktx)
+            implementation(libs.androidx.appcompat)
+            implementation(libs.androidx.core.ktx)
 
             implementation(libs.smack.art)
             implementation(libs.accompanist.systemuicontroller)
         }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.material3)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+            implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.androidx.lifecycle.viewmodel)
+
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.room.ktx)
+
+            implementation(libs.androidx.sqlite.bundled)
 
             implementation(libs.compose.navigation)
             implementation(libs.smack.tcp)
@@ -54,6 +69,7 @@ kotlin {
             implementation(libs.smack.experimental)
             implementation(libs.smack.omemo)
         }
+
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
@@ -61,6 +77,11 @@ kotlin {
             implementation(libs.smack.jvm)
         }
     }
+}
+
+dependencies {
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspDesktop", libs.androidx.room.compiler)
 }
 
 android {

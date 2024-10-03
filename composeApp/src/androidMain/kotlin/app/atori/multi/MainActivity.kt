@@ -1,11 +1,11 @@
-package test.multi
+package app.atori.multi
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -16,14 +16,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             val systemUiController = rememberSystemUiController()
             val useDarkIcons = !isSystemInDarkTheme()
-            
-            TestMultiApp()
-            SideEffect {
+
+            LaunchedEffect(Unit) {
                 systemUiController.setSystemBarsColor(
                     darkIcons = useDarkIcons,
                     color = Color.Transparent
                 )
             }
+
+            AtoriApp()
         }
     }
 }

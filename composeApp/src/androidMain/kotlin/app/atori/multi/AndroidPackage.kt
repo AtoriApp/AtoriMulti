@@ -1,4 +1,4 @@
-package test.multi
+package app.atori.multi
 
 import android.app.Application
 import android.content.Context

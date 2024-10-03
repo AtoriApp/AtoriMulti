@@ -1,19 +1,40 @@
-package test.multi.utils
+package app.atori.multi.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.room.RoomDatabase
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import app.atori.multi.datastore.AtoriDatabase
+import kotlinx.coroutines.Dispatchers
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
-import org.jxmpp.jid.Jid
 import org.jxmpp.jid.impl.JidCreate
+import java.text.SimpleDateFormat
+import java.util.*
+
+object TimestampUtils {
+    val Long.timeStr: String
+        get() {
+            val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
+            val date = Date(this)
+            return sdf.format(date)
+        }
+}
+
+expect object Multiplatform {
+    fun getAtoriDbBuilder(): RoomDatabase.Builder<AtoriDatabase>
+}
+
+object DatabaseUtils {
+    fun RoomDatabase.Builder<AtoriDatabase>.getDb(): AtoriDatabase = this
+        .setDriver(BundledSQLiteDriver())
+        .setQueryCoroutineContext(Dispatchers.IO)
+        .build()
+}
 
 object XmppUtils {
     val String.jid
