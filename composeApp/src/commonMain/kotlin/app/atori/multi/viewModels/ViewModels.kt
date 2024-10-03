@@ -1,7 +1,7 @@
 package app.atori.multi.viewModels
 
 import androidx.lifecycle.ViewModel
-import app.atori.multi.datastore.MessageDao
+import app.atori.multi.databases.MessageDao
 import app.atori.multi.entities.MessageEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

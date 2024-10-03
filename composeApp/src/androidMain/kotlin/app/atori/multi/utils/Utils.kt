@@ -3,7 +3,7 @@ package app.atori.multi.utils
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import app.atori.multi.Universal.appContext
-import app.atori.multi.datastore.AtoriDatabase
+import app.atori.multi.databases.AtoriDatabase
 
 
 actual object Multiplatform {

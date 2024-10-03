@@ -1,4 +1,4 @@
-package app.atori.multi.datastore
+package app.atori.multi.databases
 
 import androidx.room.*
 import app.atori.multi.entities.MessageEntity
