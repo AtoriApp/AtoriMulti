@@ -1,9 +1,18 @@
+@file:Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
+
 package app.atori.multi.utils
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigator
 import androidx.room.RoomDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import app.atori.multi.databases.AtoriDatabase
@@ -16,6 +25,21 @@ import org.jxmpp.jid.impl.JidCreate
 import java.text.SimpleDateFormat
 import java.util.*
 
+object NavigatorUtils {
+    fun NavHostController.naviIfNotHere(destination: String) {
+        println("Current destination: ${currentDestination?.route}, destination: $destination")
+        if (currentDestination?.route != destination) {
+            navigate(destination) /*{
+                popUpTo(graph.startDestinationId) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }*/
+        }
+    }
+}
+
 object TimestampUtils {
     val Long.timeStr: String
         get() {
@@ -25,15 +49,17 @@ object TimestampUtils {
         }
 }
 
-expect object Multiplatform {
+expect object MultiplatformIO {
     fun getAtoriDbBuilder(): RoomDatabase.Builder<AtoriDatabase>
 }
 
 object DatabaseUtils {
-    fun RoomDatabase.Builder<AtoriDatabase>.getDb(): AtoriDatabase = this
+    fun RoomDatabase.Builder<AtoriDatabase>.buildDb(): AtoriDatabase = this
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
         .build()
+
+    const val DATABASE_NAME = "atori_multi.db"
 }
 
 object XmppUtils {
@@ -53,6 +79,10 @@ object ComposeUtils {
 
     val Float.pxRound: Int
         @Composable get() = (this + 0.5f).toInt()
+
+    @Composable
+    fun Modifier.paddingForSystemBars(): Modifier =
+        Modifier.padding(WindowInsets.systemBars.asPaddingValues())
 }
 
 object ResUtils {

@@ -175,7 +175,7 @@ val testMultiLightColorScheme = lightColorScheme(
 
 // 包装的一层主题，你可以理解为在毛坯房上刷油漆
 @Composable
-fun TestMultiTheme(
+fun AtoriMultiTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

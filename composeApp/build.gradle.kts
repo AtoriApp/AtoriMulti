@@ -45,7 +45,6 @@ kotlin {
             implementation(libs.androidx.core.ktx)
 
             implementation(libs.smack.art)
-            implementation(libs.accompanist.systemuicontroller)
         }
 
         commonMain.dependencies {
@@ -53,13 +52,13 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(compose.uiTooling)
 
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.androidx.lifecycle.viewmodel)
 
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.room.ktx)
-
             implementation(libs.androidx.sqlite.bundled)
 
             implementation(libs.compose.navigation)

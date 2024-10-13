@@ -5,9 +5,9 @@ import androidx.room.RoomDatabase
 import app.atori.multi.databases.AtoriDatabase
 import java.io.File
 
-actual object Multiplatform {
+actual object MultiplatformIO {
     actual fun getAtoriDbBuilder(): RoomDatabase.Builder<AtoriDatabase> {
-        val dbFile = File(System.getProperty("java.io.tmpdir"), "my_room.db")
+        val dbFile = File(System.getProperty("java.io.tmpdir"), DatabaseUtils.DATABASE_NAME)
         return Room.databaseBuilder<AtoriDatabase>(
             name = dbFile.absolutePath,
         )

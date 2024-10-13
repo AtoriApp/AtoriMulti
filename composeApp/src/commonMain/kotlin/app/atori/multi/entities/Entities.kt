@@ -10,3 +10,10 @@ data class MessageEntity(
     val messageBody: String,
     val timestamp: Long
 )
+
+@Entity(tableName = "accounts")
+data class AccountEntity(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val jid: String,
+    val password: String,
+)

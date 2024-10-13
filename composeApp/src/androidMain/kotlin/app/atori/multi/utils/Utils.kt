@@ -6,9 +6,9 @@ import app.atori.multi.Universal.appContext
 import app.atori.multi.databases.AtoriDatabase
 
 
-actual object Multiplatform {
+actual object MultiplatformIO {
     actual fun getAtoriDbBuilder(): RoomDatabase.Builder<AtoriDatabase> {
-        val dbFile = appContext.getDatabasePath("my_room.db")
+        val dbFile = appContext.getDatabasePath(DatabaseUtils.DATABASE_NAME)
         return Room.databaseBuilder<AtoriDatabase>(
             context = appContext,
             name = dbFile.absolutePath

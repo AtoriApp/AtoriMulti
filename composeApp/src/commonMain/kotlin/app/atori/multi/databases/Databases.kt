@@ -1,12 +1,24 @@
 package app.atori.multi.databases
 
 import androidx.room.*
+import app.atori.multi.entities.AccountEntity
 import app.atori.multi.entities.MessageEntity
 import kotlinx.coroutines.flow.Flow
 
-@Database(entities = [MessageEntity::class], version = 1)
+@Database(entities = [MessageEntity::class, AccountEntity::class], version = 2)
 abstract class AtoriDatabase : RoomDatabase() {
-    abstract fun getMsgDao(): MessageDao
+    abstract fun getMessageDao(): MessageDao
+
+    abstract fun getAccountDao(): AccountDao
+}
+
+@Dao
+interface AccountDao {
+    @Insert
+    suspend fun insertAccount(account: AccountEntity)
+
+    @Query("SELECT * FROM accounts")
+    fun getAllAccounts(): Flow<List<AccountEntity>>
 }
 
 @Dao
